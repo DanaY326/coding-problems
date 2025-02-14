@@ -203,12 +203,8 @@ int main(void) {
 					bool read_success = scanf("%d", &(shot_rows[i])) == 1;
 					read_success = read_success &&
 					               scanf("%d", &(shot_cols[i])) == 1;
-					read_success = read_success && shot_rows[i] >= 0;
-					read_success = read_success && shot_rows[i] < BOARD_ROWS;
-					read_success = read_success && shot_cols[i] >= 0;
-					read_success = read_success && shot_cols[i] < BOARD_COLS;
 					if (!read_success) {
-						printf("Given invalid shot coordinates.\n");
+						printf("Failed to read shot coordinates.\n");
 						return 0;
 					}
 				}
