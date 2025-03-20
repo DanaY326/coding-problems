@@ -14,7 +14,6 @@ extern const int SIZEOF_CNODE;
 struct contiguous *make_contiguous(size_t size);
 
 //destroy_contiguous(block) Cleans up block.
-// If block has items that are not yet properly cfree'd, print a warning.
 // effects: calls free.
 void destroy_contiguous(struct contiguous *block);
 
