@@ -7,10 +7,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 // I received help from and/or collaborated with:
 
-// ERROR_NO_INTEGRITY_STATEMENT
+// None
 //
-// Name: ERROR_NO_NAME
-// login ID: ERROR_NO_LOGIN
+// Name: Dana Yuan
+// login ID: d32yuan
 //////////////////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
 #include <assert.h>
@@ -60,6 +60,10 @@ void print_ship(const struct ship *shp) {
 ////////////////////////////////////////////////////////////////////
 
 
+// document!
+// 
+
+
 // read_ship(shp) reads the values of a ship from stdin and assigns them to the
 //   ship pointed to by shp if and only if successful. Returns true if successful
 //   and false if not.
@@ -68,6 +72,24 @@ void print_ship(const struct ship *shp) {
 //          may mutate the ship pointed to by shp
 bool read_ship(struct ship *shp) {
 	// TODO: your implementation here
+	struct ship shp_temp;
+	char dir = ' ';
+	if (scanf("%s", &(shp_temp.name)) == 1) {
+		if (scanf("%c", &(shp_temp.sym)) == 1) {
+			if (scanf("%c", &dir) == 1) {
+				if (scanf("%d", &(shp_temp.length) == 1) {
+					if (scanf("%d", &(shp_temp.top_left_row)) == 1) {
+						if (scanf("&d", &(shp_temp.top_left_col)) == 1) {
+
+
+							shp->hits = 0;
+							return true;
+						}
+					}
+				}
+			}
+		}
+	}
 	return false;
 }
 

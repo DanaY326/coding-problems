@@ -8,6 +8,6 @@ int main(void){
   int val = 0;
   while(1 == scanf("%d",&val)){
     // uncomment the next line
-    // printf("Integer read was: %d\n",val);
+    printf("Integer read was: %d\n",val);
   }
 } 
