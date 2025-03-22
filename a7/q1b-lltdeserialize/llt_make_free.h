@@ -1,3 +1,6 @@
+#ifndef _LLT_MAKE_FREE_H_
+#define _LLT_MAKE_FREE_H_
+
 struct llt {
   int val;
   struct llt **children;
@@ -21,3 +24,5 @@ struct llt *llt_read(void);
 // llt_destroy(t) Clean up t.
 // effects: frees memory.
 void llt_destroy(struct llt *t);
+
+#endif

@@ -1,3 +1,5 @@
+#include "llt_make_free.h"
+
 // count_leaves(t) Count how many leaves there are in t.
 int count_leaves(const struct llt *t);
 

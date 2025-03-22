@@ -18,14 +18,14 @@
 #include <assert.h>
 #include "llt_make_free.h"
 
-// See documentation in llt_creator.h
+// See documentation in llt_make_free.h
 struct llt *llt_read(void) {
   //...
 }
 
 
 
-// See documentation in llt_creator.h
+// See documentation in llt_make_free.h
 void llt_destroy(struct llt *t) {
   // ...
 }
