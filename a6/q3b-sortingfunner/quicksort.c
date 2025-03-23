@@ -7,10 +7,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 // I received help from and/or collaborated with:
 
-// ERROR_NO_INTEGRITY_STATEMENT
+// None
 //
-// Name: ERROR_NO_NAME
-// login ID: ERROR_NO_LOGIN
+// Name: Dana Yuan
+// login ID: d32yuan
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // quicksort.c [IMPLEMENTATION]
@@ -35,7 +35,37 @@ static void swap(int *a, int *b) {
 
 // === QUICK SORT =============================================================
 
+// quick_sort_worker(first, last, arr, arr_len) sorts the elements between
+//   first and last in arr using quick sort. arr_len is used for debug output
+//   only.
+// requires: first, last, and arr must be valid, arr_len must be positive
+// effects: might modify arr
+static void quick_sort_worker(int *first, int *last, 
+  int *arr, int arr_len) {
+  // your implementation goes here
+  assert(arr_len >= 1);
+  struct stack *s = stack_create();
+
+  if (first < last) {             
+    int *pivot = first;         
+    int *swapper = last;       
+    for (int *i = last; i > first; --i) { 
+      if (*i > *pivot) {         
+        swap(swapper, i);    
+        --swapper;           
+      }
+    }
+    swap(first, swapper);  
+    array_print(arr, arr_len);
+    quick_sort_worker(first, swapper - 1, arr, arr_len); 
+    quick_sort_worker(swapper + 1, last, arr, arr_len); 
+  }
+}
+
 // see quicksort.h for documentation
 void quick_sort(int arr[], int arr_len) {
   // your implementation goes here
+  assert(arr);
+  assert(arr_len >= 1);
+  quick_sort_worker(arr, arr + arr_len - 1, arr, arr_len);
 }

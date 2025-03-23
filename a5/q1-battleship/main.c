@@ -60,8 +60,22 @@ void print_ship(const struct ship *shp) {
 ////////////////////////////////////////////////////////////////////
 
 
-// document!
-// 
+// clone_shp(ship_src, shp_dest) copies all the values in struct ship_src into shp_dest
+// requires: shp_src and shp_dest are valid struct ships
+// effects: mutates the ship pointed to by shp_dest
+void clone_shp(struct ship *shp_src, struct ship *shp_dest) {
+	assert(shp_src);
+	assert(shp_dest);
+	for (int i = 0; i < 50; ++i) {
+		shp_dest->name[i] = shp_src->name[i];
+	}
+	shp_dest->sym = shp_src->sym;
+	shp_dest->is_vert = shp_src->is_vert;
+	shp_dest->length = shp_src->length;
+	shp_dest->top_left_row = shp_src->top_left_row;
+	shp_dest->top_left_col = shp_src->top_left_col;
+	shp_dest->hits = shp_src->hits;
+}
 
 
 // read_ship(shp) reads the values of a ship from stdin and assigns them to the
@@ -72,17 +86,18 @@ void print_ship(const struct ship *shp) {
 //          may mutate the ship pointed to by shp
 bool read_ship(struct ship *shp) {
 	// TODO: your implementation here
+	assert(shp);
 	struct ship shp_temp;
 	char dir = ' ';
-	if (scanf("%s", &(shp_temp.name)) == 1) {
-		if (scanf("%c", &(shp_temp.sym)) == 1) {
-			if (scanf("%c", &dir) == 1) {
-				if (scanf("%d", &(shp_temp.length) == 1) {
-					if (scanf("%d", &(shp_temp.top_left_row)) == 1) {
-						if (scanf("&d", &(shp_temp.top_left_col)) == 1) {
-
-
-							shp->hits = 0;
+	if (scanf("%50s", shp_temp.name) == 1) {
+		if (scanf(" %c", &(shp_temp.sym)) == 1) {
+			if (scanf(" %c", &dir) == 1) {
+				if (scanf("%d", &shp_temp.length) == 1) {
+					if (scanf("%d", &shp_temp.top_left_row) == 1) {
+						if (scanf("%d", &shp_temp.top_left_col) == 1) {
+							shp_temp.is_vert = (dir == 'v');
+							shp_temp.hits = 0;
+							clone_shp(&shp_temp, shp);
 							return true;
 						}
 					}
@@ -95,15 +110,86 @@ bool read_ship(struct ship *shp) {
 
 
 // TODO: your design recipe here
+// print_board(board) prints a visual representation of the board
+// requires: board is a valid board
+// effects: produces output
 void print_board(char *board) {
 	// TODO: your implementation here
+	assert(board);
+	for (int row = 0; row < BOARD_ROWS; ++row) {
+		for (int col = 0; col < BOARD_COLS; ++ col) {
+			printf("%c", *board);
+			++board;
+		}
+		printf("\n");
+	}
+}
+
+// get_sqr(board, row, col) returns the character at a given row and column of the board
+// requires: board is a valid board
+char get_sqr(char *board, int row, int col) {
+	assert(board);
+	return board[row * BOARD_COLS + col];
+}
+
+// chg_sqr(board, row, col, c) mutates the square at a given row and column of the board to be c
+// requires: board is a valid board
+// effects: mutates the board pointed to by board
+void chg_sqr(char *board, int row, int col, char c) {
+	assert(board);
+	board[row * BOARD_COLS + col] = c;
 }
 
 
 // TODO: your design recipe here
+// place_ship(shp, board) places a ship on the board if it's valid (in bounds and not overlapping with an existing ship)
+// and does nothing if invalid
+// it returns true if successful and false otherwise
+// requires: shp is a valid ship and board is a valid board
+// effects: may mutate the board pointed to by board
 bool place_ship(const struct ship *shp, char *board) {
 	// TODO: your implementation here
-	return true;
+	assert(shp);
+	assert(board);
+	if (shp->top_left_row >= 0 && shp->top_left_col >= 0) {
+		int bottom_right_row = shp->top_left_row;
+		int bottom_right_col = shp->top_left_col;
+	
+		if (shp->is_vert) {
+			bottom_right_row += (shp->length - 1);
+		} else {
+			bottom_right_col += (shp->length - 1);
+		}
+		if (bottom_right_row < 10 && bottom_right_col < 10) {
+			bool ship_here = false;
+			if (shp->is_vert) {
+				for (int r = shp->top_left_row; r <= bottom_right_row; ++r) {
+					if (get_sqr(board, r, shp->top_left_col) != '.' && get_sqr(board, r, shp->top_left_col) != '-') {
+							ship_here = true;
+						 }
+				}
+			} else {
+				for (int c = shp->top_left_col; c <= bottom_right_col; ++c) {
+					if (get_sqr(board, shp->top_left_row, c) != '.' && get_sqr(board, shp->top_left_row, c) != '-') {
+							ship_here = true;
+						 }
+				}
+			}
+			if (ship_here == false) {
+				if (shp->is_vert) {
+					for (int r = shp->top_left_row; r <= bottom_right_row; ++r) {
+						chg_sqr(board, r, shp->top_left_col, shp->sym);
+					}
+				} else {
+					for (int c = shp->top_left_col; c <= bottom_right_col; ++c) {
+						chg_sqr(board, shp->top_left_row, c, shp->sym);
+					}
+				}
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 
@@ -117,7 +203,13 @@ bool place_ship(const struct ship *shp, char *board) {
 // effects: mutates the board pointed to by board
 char fire_shot(char *board, const int shot_row, const int shot_col) {
 	// TODO: your implementation here
-	return '\0';
+	char orig = get_sqr(board, shot_row, shot_col);
+	if (orig == '.' || orig == '-') {
+		chg_sqr(board, shot_row, shot_col, '-');
+	} else {
+		chg_sqr(board, shot_row, shot_col, '*');
+	}
+	return orig;
 }
 
 
@@ -141,6 +233,25 @@ void play_battleship(struct ship *ship_arr, const int num_ships, char *board,
 					const int num_shots, const int *shot_rows,
 					const int *shot_cols) {
 	// TODO: your implementation here
+	for (int i = 0; i < num_ships; ++i) {
+		place_ship(&ship_arr[i], board);
+	}
+	for (int j = 0; j < num_shots; ++j) {
+		char orig = fire_shot(board, shot_rows[j], shot_cols[j]);
+		if (orig == '.' || orig == '-' || orig == '*') {
+			printf("Miss at R%d C%d\n", shot_rows[j], shot_cols[j]);
+		} else {
+			printf("Hit at R%d C%d\n", shot_rows[j], shot_cols[j]);
+			int k = 0;
+			while (orig != ship_arr[k].sym) {
+				++k;
+			}
+			ship_arr[k].hits += 1;
+			if (ship_arr[k].hits == ship_arr[k].length) {
+				printf("%s was sunk!\n", ship_arr[k].name);
+			}
+		}
+	}
 }
 
 

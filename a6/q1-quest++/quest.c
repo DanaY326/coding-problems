@@ -7,10 +7,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 // I received help from and/or collaborated with:
 
-// ERROR_NO_INTEGRITY_STATEMENT
+// None
 //
-// Name: ERROR_NO_NAME
-// login ID: ERROR_NO_LOGIN
+// Name: Dana Yuan
+// login ID: d32yuan
 //////////////////////////////////////////////////////////////////////////////////////////
 
 #include "quest.h"
@@ -31,6 +31,8 @@ void quest_init(struct quest *q) {
   //
   // ADD CODE
   //
+  q->students = malloc(sizeof(int) * MAX_STUDENTS)；
+
 }
 
 // see quest.h for documentation

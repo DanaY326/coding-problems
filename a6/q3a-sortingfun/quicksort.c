@@ -7,10 +7,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 // I received help from and/or collaborated with:
 
-// ERROR_NO_INTEGRITY_STATEMENT
+// None
 //
-// Name: ERROR_NO_NAME
-// login ID: ERROR_NO_LOGIN
+// Name: Dana Yuan
+// login ID: d32yuan
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // quicksort.c [IMPLEMENTATION]
@@ -43,6 +43,21 @@ static void swap(int *a, int *b) {
 static void quick_sort_worker(int *first, int *last, 
                               int *arr, int arr_len) {
   // your implementation goes here
+  assert(arr_len >= 1);
+  if (first < last) {             
+    int *pivot = first;         
+    int *swapper = last;       
+    for (int *i = last; i > first; --i) { 
+      if (*i > *pivot) {         
+        swap(swapper, i);    
+        --swapper;           
+      }
+    }
+    swap(first, swapper);  
+    array_print(arr, arr_len);
+    quick_sort_worker(first, swapper - 1, arr, arr_len); 
+    quick_sort_worker(swapper + 1, last, arr, arr_len); 
+  }
 }
 
 // see quicksort.h for documentation
@@ -50,4 +65,5 @@ void quick_sort(int *arr, int arr_len) {
   assert(arr);
   assert(arr_len >= 1);
   // your implementation goes here
+  quick_sort_worker(arr, arr + arr_len - 1, arr, arr_len);
 }
