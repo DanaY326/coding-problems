@@ -1,0 +1,39 @@
+Reading trees from stdin.
+
+New tree of 1 leaves:
+17
+[17]
+
+New tree of 1 leaves:
+<18
+>
+[18]
+
+New tree of 3 leaves:
+<6
+, 7
+, 42
+>
+[6, 7, 42]
+
+New tree of 4 leaves:
+<6
+, <127
+, 128
+>
+, 42
+>
+[6, 127, 128, 42]
+
+New tree of 7 leaves:
+<6
+, <127
+, <30
+, 40
+, 50
+, 60
+>
+>
+, 42
+>
+[6, 127, 30, 40, 50, 60, 42]
