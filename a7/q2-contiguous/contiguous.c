@@ -179,6 +179,7 @@ void cfree(void *p) {
   }
 }
 
+// add documentation
 void *create_node(void *n, struct contiguous *block, int size, struct cnode *prev, struct cnode *next) {
   struct cnode *new_node = n;
   new_node->block = block;
