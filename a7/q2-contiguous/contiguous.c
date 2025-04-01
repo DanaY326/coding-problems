@@ -7,10 +7,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 // I received help from and/or collaborated with:
 
-// ERROR_NO_INTEGRITY_STATEMENT
+// None
 //
-// Name: ERROR_NO_NAME
-// login ID: ERROR_NO_LOGIN
+// Name: Dana Yuan
+// login ID: d32yuan
 //////////////////////////////////////////////////////////////////////////////////////////
 
 #include <stdio.h>
@@ -142,11 +142,25 @@ void print_debug(struct contiguous *block) {
 
 struct contiguous *make_contiguous(size_t size) {
   // ...
+  void *block = malloc(size);
+  struct contiguous *c = block;
+  c->first = NULL;
+  c->upper_limit = block + size;
+  char *d = block + sizeof(struct contiguous);
+  while (d < c->upper_limit) {
+    *d = '$';
+    ++d;
+  }
+  return c;
 }
 
 
 void destroy_contiguous(struct contiguous *block) {
   // ...
+  if (block->first != NULL) {
+    printf("Destroying non-empty block!\n");
+  }
+  free(block);
 }
 
 

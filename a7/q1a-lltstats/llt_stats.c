@@ -22,20 +22,34 @@
 
 // complete your work in this file.
 
-// count_leaves(t) Count how many leaves there are in t.
 int count_leaves(const struct llt *t) {
-    if (!t->children) {
+    if (t != NULL) {
+        assert(t);
+
+        if (t->children) { // apparently calling uninitialized memory
+            int ct = 0;
+            for (int i = 0; i < t->val; ++i) {
+                ct += count_leaves(t->children[i]);
+            }
+            return ct;
+        }
+
         return 1;
     }
-    int ct = 0;
-    for (int i = 0; i < t->val; ++i) {
-        ct += count_leaves(t->children[i]);
-    }
-    return ct;
+    return 0;
 }
 
-// returns the number of leaves added to arr
+// flatten_to_arr(t, len, arr) adds all values of t to arr in order
+// and increases *len by the number of values added to arr 
+// requires: arr have space for all leaves of t [not asserted]
+//           t, len and arr are valid
+// effects: mutates len.
+// time: O(n)
 static void flatten_to_arr(const struct llt *t, int *len, int *arr) {
+    assert(t);
+    assert(len);
+    assert(arr);
+
     if (t->children) {
         for (int i = 0; i < t->val; ++i) {
             flatten_to_arr(t->children[i], len, arr);
@@ -46,35 +60,43 @@ static void flatten_to_arr(const struct llt *t, int *len, int *arr) {
     }
 }
 
-// flatten(t, len) Create an array containing all the (leaf) values
-// stored in t, in order.  Mutate *len so it contains the length of
-// this array.
-// effects: allocates memory; caller must call free; mutates len.
-// time: O(n)
 int *flatten(const struct llt *t, int *len) {
+    assert(t);
+    assert(len);
+
     *len = 0;
     int *arr = malloc(count_leaves(t) * sizeof(int));
     flatten_to_arr(t, len, arr);
     return arr;
 }
 
-void llt_print_worker(const struct llt *t) {
-    if (t->children) {
-        printf("<");
-        for (int i = 0; i < t->val; ++i) {
-            llt_print(t->children[i]);
-            if (i < t->val - 1) {
-                printf(", ");
+// llt_print_worker(t) prints out t with each non-leaf node as a list of its nodes surrounded
+// by <> brackets and separated by commas and each leaf node as a number
+// does not include a newline at the end, allowing it to call itself recursively
+// requires: t is valid
+// effects: produces output
+// time: O(n)
+static void llt_print_worker(const struct llt *t) {
+    if (t != NULL) {{
+        if (t->children) { // apparently calling uninitialized memory
+            printf("<");
+            for (int i = 0; i < t->val; ++i) {
+                llt_print_worker(t->children[i]);
+                if (i < t->val - 1) {
+                    printf(", ");
+                }
             }
+            printf(">");
+        } else {
+            printf("%d", t->val);
         }
-        printf(">");
-    } else {
-        printf("%d", t->val);
-    }
+    }}
+    assert(t);
 }
 
-// llt_print(t) Print the tree t, nicely, with brackets.
 void llt_print(const struct llt *t) {
+    assert(t);
+
     llt_print_worker(t);
     printf("\n");
 }
