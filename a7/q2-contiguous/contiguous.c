@@ -159,6 +159,7 @@ struct contiguous *make_contiguous(size_t size) {
 
 void destroy_contiguous(struct contiguous *block) {
   // ...
+  assert(block);
   if (block->first != NULL) {
     printf("Destroying non-empty block!\n");
   }
@@ -168,6 +169,7 @@ void destroy_contiguous(struct contiguous *block) {
 
 void cfree(void *p) {
   // ...
+  assert(p);
   struct cnode *n = p - sizeof(struct cnode);
   if (n->prev == NULL) {
     n->block->first = n->next;
@@ -183,12 +185,17 @@ void cfree(void *p) {
 // it adds itself to the middle of a linked list with the given prev and next cnodes
 // requires: dest, block, prev and next are valid pointers
 //           prev and next are in block [not asserted]
-//           there is enough space in block for the node and its chunk [not asserted]
+//           at dest there's enough space in the block for the node and its chunk [not asserted]
 // effects: modifies dest
 //          may modify block, prev or next
 // time: O(1)
 
 void *create_node(void *dest, struct contiguous *block, int size, struct cnode *prev, struct cnode *next) {
+  assert(dest);
+  assert(block);
+  assert(prev);
+  assert(next);
+
   struct cnode *new_node = dest;
   new_node->block = block;
   new_node->prev = prev;
@@ -207,6 +214,8 @@ void *create_node(void *dest, struct contiguous *block, int size, struct cnode *
 
 void *cmalloc(struct contiguous *block, int size) {
   // ...
+  assert(block);
+
   struct cnode *n = block->first;
   void *nv = n;
   if (n == NULL) {
