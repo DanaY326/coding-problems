@@ -221,7 +221,7 @@ void *cmalloc(struct contiguous *block, int size) {
   }
   if (n != NULL) {
     nv = n;
-    if (block->upper_limit - nv >= size) {
+    if ((block->upper_limit - nv) - sizeof(struct cnode) - n->nsize >= (sizeof(struct cnode) + size)) {
       nv += sizeof(struct cnode) + n->nsize;
       return create_node(nv, block, size, n, NULL);
     }
