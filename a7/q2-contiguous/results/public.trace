@@ -1,0 +1,52 @@
+=================================================================
+==111140==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60e0000000e8 at pc 0x556a4e8827e4 bp 0x7fffb6483220 sp 0x7fffb6483218
+WRITE of size 8 at 0x60e0000000e8 thread T0
+    #0 0x556a4e8827e3 in create_node /u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/contiguous.c:184:19
+    #1 0x556a4e882d67 in cmalloc /u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/contiguous.c:226:14
+    #2 0x556a4e883708 in public_test /u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/test-contiguous.c:51:14
+    #3 0x556a4e8837b8 in main /u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/test-contiguous.c:76:3
+    #4 0x7ff5ff841d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #5 0x7ff5ff841e3f in __libc_start_main csu/../csu/libc-start.c:392:3
+    #6 0x556a4e7c3334 in _start (/u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/myprogram+0x1f334) (BuildId: bdd642739bd127b0fd01f821c1482fe27ecd37c9)
+
+0x60e0000000e8 is located 18 bytes to the right of 150-byte region [0x60e000000040,0x60e0000000d6)
+allocated by thread T0 here:
+    #0 0x556a4e84617e in __interceptor_malloc (/u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/myprogram+0xa217e) (BuildId: bdd642739bd127b0fd01f821c1482fe27ecd37c9)
+    #1 0x556a4e8823d8 in make_contiguous /u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/contiguous.c:146:17
+    #2 0x556a4e8830c4 in public_test /u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/test-contiguous.c:7:26
+    #3 0x556a4e8837b8 in main /u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/test-contiguous.c:76:3
+    #4 0x7ff5ff841d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /u9/d32yuan/cs136/cs136w25/a7/q2-contiguous/contiguous.c:184:19 in create_node
+Shadow bytes around the buggy address:
+  0x0c1c7fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c1c7fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c1c7fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c1c7fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c1c7fff8000: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+=>0x0c1c7fff8010: 00 00 00 00 00 00 00 00 00 00 06 fa fa[fa]fa fa
+  0x0c1c7fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c1c7fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c1c7fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c1c7fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c1c7fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==111140==ABORTING

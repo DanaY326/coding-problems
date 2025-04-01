@@ -147,10 +147,11 @@ struct contiguous *make_contiguous(size_t size) {
   struct contiguous *c = block;
   c->first = NULL;
   c->upper_limit = block + size;
-  char *d = block + sizeof(struct contiguous);
+  void *d = block + sizeof(struct contiguous);
   while (d < c->upper_limit) {
-    *d = '$';
-    ++d;
+    char *dc = d;
+    *dc = '$';
+    d += sizeof(char);
   }
   return c;
 }
@@ -178,25 +179,52 @@ void cfree(void *p) {
   }
 }
 
+void *create_node(void *n, struct contiguous *block, int size, struct cnode *prev, struct cnode *next) {
+  struct cnode *new_node = n;
+  new_node->block = block;
+  new_node->prev = prev;
+  if (prev == NULL) {
+    block->first = new_node;
+  } else {
+    prev->next = new_node;
+  }
+  new_node->next = next;
+  if (next != NULL) {
+    next->prev = new_node;
+  }
+  new_node->nsize = size;
+  return n + sizeof(struct cnode);
+}
 
 void *cmalloc(struct contiguous *block, int size) {
   // ...
   struct cnode *n = block->first;
   void *nv = n;
-  while (n != NULL) {
-    if (n->next != NULL && gapsize(n, n->next) >= (sizeof(struct cnode) + size) ||
-  n->next == NULL && (block->upper_limit - nv) - n->nsize - sizeof(struct cnode) >= (sizeof(struct cnode) + size)) {
-      struct cnode *new_node = nv + sizeof(struct cnode) + n->nsize;
-      new_node->block = block;
-      new_node->next = n->next;
-      new_node->prev = n;
-      new_node->nsize = size;
-      n->next->prev = new_node;
-      n->next = new_node;
-      void *nn = new_node;
-      return nn + sizeof(struct cnode);
+  if (n == NULL) {
+    nv = block;
+    nv += sizeof(struct contiguous);
+    return create_node(nv, block, size, NULL, NULL);
+  }
+  nv = n;
+  void *nv2 = block;
+  if ((nv - nv2) - sizeof(struct contiguous) >= (sizeof(struct cnode) + size)) {
+    nv2 += sizeof(struct contiguous);
+    return create_node(nv2, block, size, NULL, block->first);
+  }
+  while (n != NULL && n->next != NULL) {
+    if ((n->next != NULL && (gapsize(n, n->next) >= (sizeof(struct cnode) + size)))) {
+      nv = n;
+      nv += sizeof(struct cnode) + n->nsize;
+      return create_node(nv, block, size, n, n->next);
     }
     n = n->next;
+  }
+  if (n != NULL) {
+    nv = n;
+    if (block->upper_limit - nv >= size) {
+      nv += sizeof(struct cnode) + n->nsize;
+      return create_node(nv, block, size, n, NULL);
+    }
   }
   return NULL;
 }
