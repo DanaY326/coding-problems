@@ -143,7 +143,7 @@ void print_debug(struct contiguous *block) {
 struct contiguous *make_contiguous(size_t size) {
   // ...
   assert(size >= sizeof(struct contiguous));
-  
+
   void *block = malloc(size);
   struct contiguous *c = block;
   c->first = NULL;
@@ -170,7 +170,9 @@ void destroy_contiguous(struct contiguous *block) {
 
 void cfree(void *p) {
   // ...
-  assert(p);
+  if (p == NULL) {
+    return;
+  }
   struct cnode *n = p - sizeof(struct cnode);
   if (n->prev == NULL) {
     n->block->first = n->next;
