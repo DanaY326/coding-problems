@@ -1,0 +1,77 @@
+Breakpoint 1 at 0x118c: file llt_stats.c, line 26.
+Breakpoint 2 at 0x1314: file llt_stats.c, line 49.
+Breakpoint 3 at 0x1260: file llt_stats.c, line 64.
+Breakpoint 4 at 0x148c: file llt_stats.c, line 80.
+Breakpoint 5 at 0x142c: file llt_stats.c, line 98.
+Undefined command: "1".  Try "help".
+Starting program: /u9/d32yuan/cs136/cs136w25/a7/q1a-lltstats/a.out 1
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, count_leaves (t=0x555555559ac0) at llt_stats.c:26
+warning: Source file is more recent than executable.
+Hardware watchpoint 6: t->children
+1: t->children = (struct llt **) 0x0
+2: t->val = 18
+Continuing.
+
+Watchpoint 6 deleted because the program has left the block in
+which its expression is valid.
+0x00005555555555d0 in main () at test-llt.c:17
+Continuing.
+
+Breakpoint 5, llt_print (t=0x555555559ac0) at llt_stats.c:98
+Hardware watchpoint 7: t->children
+3: t->children = (struct llt **) 0x0
+Continuing.
+
+Breakpoint 4, llt_print_worker (t=0x555555559ac0) at llt_stats.c:80
+4: t->children = (struct llt **) 0x0
+Continuing.
+
+Watchpoint 7 deleted because the program has left the block in
+which its expression is valid.
+main () at test-llt.c:21
+Continuing.
+
+Breakpoint 3, flatten (t=0x555555559ac0, len=0x7fffffffe4f4) at llt_stats.c:64
+Continuing.
+
+Breakpoint 1, count_leaves (t=0x555555559ac0) at llt_stats.c:26
+1: t->children = (struct llt **) 0x0
+2: t->val = 18
+5: t->children = (struct llt **) 0x0
+Continuing.
+
+Breakpoint 2, flatten_to_arr (t=0x555555559ac0, len=0x7fffffffe4f4, arr=0x555555559ae0) at llt_stats.c:49
+Continuing.
+[Inferior 1 (process 157982) exited normally]
+Breakpoint 8 at 0x55555555518c: file llt_stats.c, line 26.
+Breakpoint 9 at 0x55555555548c: file llt_stats.c, line 80.
+Starting program: /u9/d32yuan/cs136/cs136w25/a7/q1a-lltstats/a.out 1
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Inferior 1 (process 167048) exited normally]
+The program is not being run.
+Breakpoint 10 at 0x55555555518c: file llt_stats.c, line 26.
+Breakpoint 11 at 0x55555555548c: file llt_stats.c, line 80.
+Starting program: /u9/d32yuan/cs136/cs136w25/a7/q1a-lltstats/a.out < public0.in
+During startup program exited with code 1.
+Starting program: /u9/d32yuan/cs136/cs136w25/a7/q1a-lltstats/a.out tests/public0.in
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Inferior 1 (process 170021) exited normally]
+The program is not being run.
+Note: breakpoint 10 also set at pc 0x55555555518c.
+Breakpoint 12 at 0x55555555518c: file llt_stats.c, line 26.
+Num     Type           Disp Enb Address            What
+10      breakpoint     keep y   0x000055555555518c in count_leaves at llt_stats.c:26
+11      breakpoint     keep y   0x000055555555548c in llt_print_worker at llt_stats.c:80
+12      breakpoint     keep y   0x000055555555518c in count_leaves at llt_stats.c:26
+Num     Type           Disp Enb Address            What
+10      breakpoint     keep y   0x000055555555518c in count_leaves at llt_stats.c:26
+11      breakpoint     keep y   0x000055555555548c in llt_print_worker at llt_stats.c:80
+Starting program: /u9/d32yuan/cs136/cs136w25/a7/q1a-lltstats/a.out > tests/public0.in
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Inferior 1 (process 172946) exited normally]
