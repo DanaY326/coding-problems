@@ -26,7 +26,7 @@ int count_leaves(const struct llt *t) {
     if (t != NULL) {
         assert(t);
 
-        if (t->children) { // apparently calling uninitialized memory
+        if (t->children) { 
             int ct = 0;
             for (int i = 0; i < t->val; ++i) {
                 ct += count_leaves(t->children[i]);
@@ -78,7 +78,7 @@ int *flatten(const struct llt *t, int *len) {
 // time: O(n)
 static void llt_print_worker(const struct llt *t) {
     if (t != NULL) {{
-        if (t->children) { // apparently calling uninitialized memory
+        if (t->children) { 
             printf("<");
             for (int i = 0; i < t->val; ++i) {
                 llt_print_worker(t->children[i]);
