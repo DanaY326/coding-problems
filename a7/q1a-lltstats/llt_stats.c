@@ -23,20 +23,17 @@
 // complete your work in this file.
 
 int count_leaves(const struct llt *t) {
-    if (t != NULL) {
-        assert(t);
+    assert(t);
 
-        if (t->children) { 
-            int ct = 0;
-            for (int i = 0; i < t->val; ++i) {
-                ct += count_leaves(t->children[i]);
-            }
-            return ct;
+    if (t->children) { 
+        int ct = 0;
+        for (int i = 0; i < t->val; ++i) {
+            ct += count_leaves(t->children[i]);
         }
-
-        return 1;
+        return ct;
     }
-    return 0;
+
+    return 1;
 }
 
 // flatten_to_arr(t, len, arr) adds all values of t to arr in order

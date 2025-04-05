@@ -143,6 +143,7 @@ void print_debug(struct contiguous *block) {
 struct contiguous *make_contiguous(size_t size) {
   // ...
   assert(size >= sizeof(struct contiguous));
+  
   void *block = malloc(size);
   struct contiguous *c = block;
   c->first = NULL;
@@ -213,6 +214,7 @@ void *create_node(void *dest, struct contiguous *block, int size, struct cnode *
 void *cmalloc(struct contiguous *block, int size) {
   // ...
   assert(block);
+  assert(size >= 0);
 
   struct cnode *n = block->first;
   void *nv = n;
