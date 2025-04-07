@@ -70,25 +70,23 @@ int *flatten(const struct llt *t, int *len) {
 // llt_print_worker(t) prints out t with each non-leaf node as a list of its nodes surrounded
 // by <> brackets and separated by commas and each leaf node as a number
 // does not include a newline at the end, allowing it to call itself recursively
-// requires: t is valid
+// requires: t is a valid non-null pointer 
 // effects: produces output
 // time: O(n)
 static void llt_print_worker(const struct llt *t) {
-    if (t != NULL) {{
-        if (t->children) { 
-            printf("<");
-            for (int i = 0; i < t->val; ++i) {
-                llt_print_worker(t->children[i]);
-                if (i < t->val - 1) {
-                    printf(", ");
-                }
-            }
-            printf(">");
-        } else {
-            printf("%d", t->val);
-        }
-    }}
     assert(t);
+    if (t->children) { 
+        printf("<");
+        for (int i = 0; i < t->val; ++i) {
+            llt_print_worker(t->children[i]);
+            if (i < t->val - 1) {
+                printf(", ");
+            }
+        }
+        printf(">");
+    } else {
+        printf("%d", t->val);
+    }
 }
 
 void llt_print(const struct llt *t) {

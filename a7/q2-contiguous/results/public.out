@@ -108,9 +108,5 @@ struct cnode
 0 byte chunk: 
 6 byte gap
 ----------------------------------------------------------------
-----------------------------------------------------------------
-struct contiguous
-    first: NULL
-134 byte gap
-----------------------------------------------------------------
 Now we call destroy_contiguous. It calls free.
+Destroying non-empty block!

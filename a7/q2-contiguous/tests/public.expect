@@ -114,3 +114,4 @@ struct contiguous
 134 byte gap
 ----------------------------------------------------------------
 Now we call destroy_contiguous. It calls free.
+Destroying non-empty block!

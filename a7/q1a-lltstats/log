@@ -75,3 +75,6 @@ Starting program: /u9/d32yuan/cs136/cs136w25/a7/q1a-lltstats/a.out > tests/publi
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
 [Inferior 1 (process 172946) exited normally]
+warning: Error detected on fd 0
+error detected on stdin
+[Inferior 1 (process 153684) exited normally]

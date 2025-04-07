@@ -187,12 +187,12 @@ void cfree(void *p) {
 // create_node(dest, block, size, prev, next) creates a new node and chunk at the location that dest points to
 // it adds itself to the middle of a linked list with the given prev and next cnodes
 // requires: dest and block are valid non-null pointers
+//           dest is within the section of memory malloc'd for block [not asserted]
 //           prev and next are valid pointers to nodes in block [not asserted]
 //           at dest there's enough space in the block for the node and its chunk [not asserted]
 // effects: modifies dest
 //          may modify block, prev or next
 // time: O(1)
-
 void *create_node(void *dest, struct contiguous *block, int size, struct cnode *prev, struct cnode *next) {
   assert(dest);
   assert(block);

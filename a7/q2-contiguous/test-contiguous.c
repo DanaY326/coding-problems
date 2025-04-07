@@ -68,6 +68,7 @@ void public_test(void) {
     "It calls free.\n");
   
   destroy_contiguous(c);
+  cfree(NULL);
 }
 
 
