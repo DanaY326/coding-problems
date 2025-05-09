@@ -1,1 +1,0 @@
-myprogram: quicksort.c:66: void quick_sort(int *, int): Assertion `arr_len >= 1' failed.
